@@ -23,7 +23,6 @@ get '/login' do
 end
 
 post '/login' do
-  binding.pry
   @driver = Driver.find_by(id: params[:driver_id])
   @driver = @driver.authenticate(params[:password])
   if @driver
@@ -35,11 +34,13 @@ post '/login' do
 end
 
 post '/sign_up' do
+  binding.pry
   unless params[:can_beer].nil?
-    Driver.create(name: params[:name], can_beer: params[:can_beer], password: params[:password])
+    @driver = Driver.create(name: params[:name], can_beer: params[:can_beer], password: params[:password])
   else
-    Driver.create(name: params[:name], password: params[:password])
+    @driver = Driver.create(name: params[:name], password: params[:password])
   end
+  session[:driver_id] = @driver.id.to_s
   redirect to('/my_orders')
 end
 
