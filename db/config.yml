@@ -1,0 +1,28 @@
+# How to set up Postgres for those on Linux:
+
+# sudo apt-get install postgresql
+# whoami
+# sudo su
+# su postgres
+# createuser -d -a -P <<whoami dude>>
+# exit
+# exit
+# createdb <<whoami dude>>
+# psql
+# sudo apt-get install libpq-dev
+# bundle
+
+# Starting and stopping:
+# /etc/init.d/postgresql start
+# /etc/init.d/postgresql stop
+
+development:
+  adapter: postgresql
+  database: pizza_delivery_development
+  # host: 192.168.0.3
+  # post: 7897
+  # Can do this kind of thing!
+
+test:
+  adapter: postgresql
+  database: pizza_delivery_test

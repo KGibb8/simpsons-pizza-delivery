@@ -1,0 +1,38 @@
+<% if current_user %>
+  Logged in as <%= current_user.name %>
+  <hr>
+<% end %>
+
+<div>
+  <form action="logout" method="POST">
+    <input type="submit" value="Log Out">
+  </form>
+</div>
+
+<div>
+  <h3>List of current orders for <%= current_user.name %></h3>
+  <% current_user.orders.each do |order| %>
+    <p>Address: <%= order.address %><br>
+    Time Order Placed: <%= order.order_date %></p>
+    <form action="order_delivered" method="POST">
+      <input type="checkbox" name="is_delivered">
+      <input type="hidden" name="order_id" value="<%= order.id %>">
+      <input type="submit" value="Delivered!"><br>
+    </form>
+  <% end %>
+</div>
+
+<div>
+  <h3>List of available orders for <%= current_user.name %></h3>
+  <form action="select_order" method="POST">
+    <select name="order_id">
+      <% @available_orders.each do |order| %>
+        <option value="<%= order.id %>">
+          <%= order.order_date %>
+          <%= order.address %>
+        </option>
+      <% end %>
+    </select>
+    <input type="submit" value="Confirm">
+  </form>
+</div>
