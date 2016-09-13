@@ -12,6 +12,16 @@ def current_user
   Driver.find_by(id: session[:driver_id])
 end
 
+post '/order' do
+  binding.pry
+  Order.create(address: params[:address], is_beer: params[:is_beer])
+  redirect to('/ordered')
+end
+
+get '/ordered' do
+  erb :ordered, :layout => :main
+end
+
 post '/logout' do
   current_user = nil
   redirect to('/login')

@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20160913154836) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "driver_id"
-    t.string  "order_date",   default: "2016-09-13 17:02:27.176083"
+    t.string  "order_date",   default: "2016-09-13 20:57:03.552529"
     t.boolean "is_beer"
     t.string  "address"
     t.boolean "is_delivered", default: false
