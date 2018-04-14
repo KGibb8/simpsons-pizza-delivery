@@ -1,0 +1,109 @@
+<% if current_user %>
+    <h2>Logged in as <%= current_user.name %></h2>
+    <form action="logout" method="POST">
+      <input type="submit" value="logout"><hr>
+    </form>
+<% end %>
+<div>
+  <h2>Welcome <%= current_user.name unless current_user.nil? %></h2>
+</div>
+
+<% if current_user.is_a "Administrator" %>
+  <div>
+    <h2>Administrator</h2>
+  </div>
+  <div>
+    <form action="/users<%= "/#{@user.id}" unless @user.new_record? %>" method="POST">
+      Name: <input type="text" name="[user]name" value="<%= @user.name %>"><br>
+      Username: <input type="text" name="[user]username" value="<%= @user.username %>"><br>
+      Password: <input type="password" name="[user]password"><br>
+      (Again): <input type="password" name="[user]password_confirmation"><br>
+
+      <% @roles.each do |role| %>
+        <input type="checkbox" value="<%= role.id %>" name="[user]role_ids[]"<%= "checked" if @user.is_a role.name %> <%= 'x-driver="yes"' if role.name == "Driver" %>><%= role.name %><br>
+        <% if role.name == "Driver" %>
+          <div id="can_beer_choice" style="display:<%= @user.is_a("Driver") ? "block" : "none" %>">
+            &nbsp; &nbsp; <input type="checkbox" name="[user]can_beer" <%= 'checked' if @user.can_beer  %>>Can Beer<br>
+          </div>
+        <% end %>
+      <% end %>
+
+      <input type="submit" value="<%= @user.new_record? ? "Create User" : "Update User" %>">
+
+    </form>
+
+    <script>
+      // Works for x-driver and can_beer_choice
+      document.querySelector("input[x-driver]").onchange = function () {
+          document.getElementById("can_beer_choice").style.display = (this.checked ? "block" : "none");
+        };
+    </script>
+  </div>
+  <div>
+    <% @orders.each do |order| %>
+      Customer: <%= order.user.name unless order.user.nil? %><br>
+      Time: <%= order.order_date %><br>
+      Address: <%= order.address %><br>
+      <br>
+    <% end %>
+  </div>
+<% end %>
+
+<% if current_user.is_a "Head Chef" %>
+  <div>
+    <h2>Head Chef</h2>
+  </div>
+  <div>
+    <% @orders.each do |order| %>
+      Customer: <%= order.user.name unless order.user.nil? %><br>
+      Time: <%= order.order_date %><br>
+      Address: <%= order.address %><br>
+      With Beer? <%= order.is_beer %><br>
+      <form action="/assign_driver" method="POST">
+        <select name="<%= order.id %>">
+          <% @users.each do |user| %>
+          <% if user.is_a "Driver" %>
+            <option value="<%= user.id %>">
+              <%= user.name %>
+            </option>
+          <% end %>
+        <% end %>
+        <input type="submit" value=""
+      </form>
+      <br>
+    <% end %>
+  </div>
+<% end %>
+
+<% if current_user.is_a "Assistant Chef" %>
+  <div>
+    <h2>Assistant Chef</h2>
+  </div>
+<% end %>
+
+<% if current_user.is_a "Driver" %>
+  <div>
+    <h2>Driver</h2>
+  </div>
+<% end %>
+
+<% if current_user.is_a "Telephone Controller" %>
+  <div>
+    <h2>Telephone Controller</h2>
+  </div>
+<% end %>
+
+<% if current_user.is_a "Customer" %>
+  <div>
+    <% current_user.orders.each_with_index do |order, order_number| %>
+      <h2>Order <%= order_number+1 %><h2>
+      <h1>Order placed at: <%= order.order_date %></h1><br>
+      <h1>Destination address: <%= order.address %></h1><br>
+      <br>
+      <br>
+    <% end %>
+  </div>
+  <div>
+    <h2><a href="/place_order">Click to place an order</a>
+  </div>
+<% end %>

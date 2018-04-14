@@ -1,0 +1,8 @@
+<div>
+  <% @roles.each do |role| %>
+    <a href="/roles/<%= role.id %>/edit">
+        <%= role.name %>
+    </a>
+    <%= role.users.map(&:name).join(", ") %><br>
+  <% end %>
+</div>

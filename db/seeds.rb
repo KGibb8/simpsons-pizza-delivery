@@ -2,25 +2,42 @@ require 'pry'
 
 ActiveRecord::Base.establish_connection YAML.load_file('db/config.yml')[ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"]
 
-Driver.destroy_all
+
 Order.destroy_all
+UserRole.destroy_all
+Role.destroy_all
+User.destroy_all
 
-@krusty = Driver.create(name: "Krusty the Clown", can_beer: true, password: "1234")
-@mr_teeny = Driver.create(name: "Mr. Teeny", can_beer: true, password: "1234")
-@radioactive_man = Driver.create(name: "Radioactive Man", can_beer: true, password: "1234")
-@homer = Driver.create(name: "Homer Simpson", can_beer: true, password: "1234")
-@bart = Driver.create(name: "Bart Simpson", can_beer: false, password: "1234")
-@lisa = Driver.create(name: "Lisa Simpson", can_beer: false, password: "1234")
-
-
-@order1 = Order.create(is_beer: true, address: "742 Evergreen Terrace, Springfield, US")
-@order2 = Order.create(is_beer: true, address: "Moe's Tavern, Springfield, US")
-@order3 = Order.create(is_beer: true, address: "The Stolen Lemon Tree, Shelbyville, US")
-@order4 = Order.create(is_beer: false, address: "123 Fake Street, Springfield, US")
-@order5 = Order.create(is_beer: false, address: "The Kwik-E-Mart, Springfield, US")
-@order6 = Order.create(is_beer: true, address: "Springfield Nuclear Power Plant, Springfield, US")
-@order7 = Order.create(is_beer: true, address: "La Maison Derrière, Springfield, US")
-@order8 = Order.create(is_beer: false, address: "First Church of Springfield, Springfield, US")
+@head_chef = Role.create(name: "Head Chef")
+@ass_chef = Role.create(name: "Assistant Chef")
+@driver = Role.create(name: "Driver")
+@customer = Role.create(name: "Customer")
+@manager = Role.create(name: "Administrator")
+@tel_controller = Role.create(name: "Telephone Controller")
 
 
-binding.pry
+# Backroom Staff
+# Manager
+@apu = User.create(name: "Apu Nahasapeemapetilon", username: "apu", password: "1234")
+@apu.roles << @manager
+
+# Head Chef
+@doris = User.create(name: "Lunchlady Doris", username: "doris", password: "1234")
+@doris.roles << @head_chef
+# Assistant Chef
+@mr_teeny = User.create(name: "Mr. Teeny", username: "mr_teeny", password: "1234")
+@mr_teeny.roles << @ass_chef
+
+# Customers
+@skinner = User.create(name: "Seymour Skinner", username: "skinner", password: "1234")
+@skinner.roles << @customer
+@wiggum = User.create(name: "Chief Clancy Wiggum", username: "wiggum", password:  "1234")
+@wiggum.roles << @customer
+@comic_book_guy = User.create(name: "Comic Book Guy", username: "comic_book_guy", password:   "1234")
+@moe = User.create(name: "Moe Szyslak", username: "moe", password:   "1234")
+@otto = User.create(name: "Otto Mann", username: "otto", password:  "1234")
+
+# Drivers
+@krusty = User.create(name: "Krusty the Clown", username: "krusty", password: "1234")
+@radioactive_man = User.create(name: "Radioactive Man", username: "radioactive_man", password: "1234")
+@homer = User.create(name: "Homer Simpson", username: "homer", password: "1234")

@@ -16,19 +16,32 @@ ActiveRecord::Schema.define(version: 20160913154836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "drivers", force: :cascade do |t|
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "order_date"
+    t.boolean "is_beer"
+    t.string  "address"
+    t.boolean "is_delivered", default: false
+    t.boolean "is_cooked",    default: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string  "name"
+    t.string  "username"
     t.boolean "can_beer",        default: false
     t.string  "password_digest"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.integer "driver_id"
-    t.string  "order_date",   default: "2016-09-13 20:57:03.552529"
-    t.boolean "is_beer"
-    t.string  "address"
-    t.boolean "is_delivered", default: false
-  end
-
-  add_foreign_key "orders", "drivers"
+  add_foreign_key "orders", "users"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

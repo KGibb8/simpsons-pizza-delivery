@@ -1,60 +1,29 @@
-<div>
-  <h2>Would you like to order a pizza?<h2>
-  <form action="order" method="POST">
-    <div style="text-align:center;">
-      <select name="is_beer">
-        <option value="true">MMMM... Beer</option>
-        <option value="false">Lightweight</option>
-      </select>
-      <h2>Enter Your Address</h2> 
-      <input type="text" name="address">
-      <input class="button" type="submit" value="YES">
-    </div>
-  </form>
-</div>
-
-<div>
+<br>
+<div style="text-align:center;">
+  <h2>Log In</h2>
+  <br>
   <form action="login" method="POST">
-    <br>
-    <h2>Name:</h2>
-    <div style="text-align:center;">
-      <select name="driver_id">
-        <% @drivers.each do |driver| %>
-          <option value="<%= driver.id %>">
-            <%= driver.name %>
-          </option>
-        <% end %>
-      </select>
-    </div>
-    <h2>Password:</h2>
-    <div style="text-align:center;">
-      <input type="password" name="password">
-    </div>
-    <br>
-    <div style="text-align:center;">
-      <input class="button" type="submit" value="Login">
-    </div>
-  </form>
+      <p>Username</p>
+      <input type="text" name="username">
+      <p>Password</p>
+      <input type="text" name="password">
+      <br>
+    <input class="button" type="submit" value="Login">
+    </form>
 </div>
-
-<div>
-  <h2>Register as a Simpsons Pizza Delivery Driver!</h2>
-`  <form action="sign_up" method="POST">
+<br>
+<br>
+<div style="text-align:center;">
+  <h2>New Customer?</h2>
+  <br>
+  <form action="sign_up" method="POST">
+      <p>Full name</p>
+      <input type="name" name="[user]name">
+      <p>Username</p>
+      <input type="username" name="[user]username">
+      <p>Password</p>
+      <input type="password" name=[user]password><br>
     <br>
-    <h2>Name:</h2>
-    <div style="text-align:center;">
-      <input type="text" name="name">
-    </div>
-    <h2>Can you deliver Beer?</h2>
-    <div style="text-align:center;">
-      <input class="checkbox" type="checkbox" name="can_beer"><br>
-    </div>
-    <h2>Password:</h2>
-    <div style="text-align:center;">
-      <input type="password" name="password"><br>
-    </div>
-    <div style="text-align:center;">
-      <input class="button" type="submit" value="Sign Up">
-    </div>
-  </form>`
+    <input class="button" type="submit" value="Sign Up">
+  </form>
 </div>

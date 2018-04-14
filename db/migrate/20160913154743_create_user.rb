@@ -1,7 +1,8 @@
-class CreateDriver < ActiveRecord::Migration
+class CreateUser < ActiveRecord::Migration
   def change
-    create_table :drivers do |t|
+    create_table :users do |t|
       t.string :name
+      t.string :username
       t.boolean :can_beer, default: false
       t.string :password_digest
     end
